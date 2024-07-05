@@ -49,7 +49,7 @@ export default function DetailedView() {
     <>
       <Navbar />
       <div className="flex h-screen">
-        <nav className="flex-shrink-0 w-72 border-r border-gray-200 bg-white px-6 overflow-y-auto">
+        <nav className="flex-shrink-0 w-60 border-r border-gray-200 bg-white px-6 overflow-y-auto">
           <ul role="list" className="flex flex-col gap-y-7">
             <li>
               <ul role="list" className="-mx-2 space-y-1">

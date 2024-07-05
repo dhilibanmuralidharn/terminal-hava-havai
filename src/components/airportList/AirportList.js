@@ -12,8 +12,20 @@ import {
   Flex,
   View,
 } from "@adobe/react-spectrum";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import TerminalContext from "../../context/TerminalContext";
 
-export default function AirportList() {
+export default function AirportList({ terminalList }) {
+  const { removeTerminal } = useContext(TerminalContext);
+  const clickToRemoveTerminal = (id) => {
+    removeTerminal(id);
+  };
+  const navigate = useNavigate();
+
+  const clickToEdit = () => {
+    navigate("/detail");
+  };
   return (
     <div>
       <Provider theme={lightTheme} colorScheme="light">
@@ -25,14 +37,6 @@ export default function AirportList() {
             <ActionButton margin="size-100" colorScheme="dark">
               Add new+
             </ActionButton>
-            <Flex gap="size-100">
-              <Button variant="cta" size="M">
-                Edit
-              </Button>
-              <Button variant="negative" size="M">
-                Delete
-              </Button>
-            </Flex>
           </Flex>
           <TableView
             aria-label="Example table with static contents"
@@ -43,38 +47,27 @@ export default function AirportList() {
               <Column>Country</Column>
               <Column>Code</Column>
               <Column align="end">Terminal</Column>
+              <Column align="center">Actions</Column>
             </TableHeader>
             <TableBody>
-              <Row>
-                <Cell>Indra Gandhi International Airport</Cell>
-                <Cell>India</Cell>
-                <Cell>DEL</Cell>
-                <Cell>3</Cell>
-              </Row>
-              <Row>
-                <Cell>Dubai International Airport</Cell>
-                <Cell>UAE</Cell>
-                <Cell>DXB</Cell>
-                <Cell>5</Cell>
-              </Row>
-              <Row>
-                <Cell>Heathrow Airport</Cell>
-                <Cell>England</Cell>
-                <Cell>LHR</Cell>
-                <Cell>6</Cell>
-              </Row>
-              <Row>
-                <Cell>Istanbul Airport</Cell>
-                <Cell>Turkey</Cell>
-                <Cell>IST</Cell>
-                <Cell>3</Cell>
-              </Row>
-              <Row>
-                <Cell>Rajiv Gandhi International Airport</Cell>
-                <Cell>Texas</Cell>
-                <Cell>DFW</Cell>
-                <Cell>14</Cell>
-              </Row>
+              {terminalList.map((item, index) => (
+                <Row key={index}>
+                  <Cell>{item.name}</Cell>
+                  <Cell>{item.country}</Cell>
+                  <Cell>{item.code}</Cell>
+                  <Cell>{item.Terminals}</Cell>
+                  <Cell>
+                    <Flex gap="size-100" justifyContent="center">
+                      <button onClick={clickToEdit}>
+                        <img src="./assets/vector.png" alt="edit" />
+                      </button>
+                      <button onClick={() => clickToRemoveTerminal(item.id)}>
+                        <img src="./assets/Right Icon.png" alt="delete" />
+                      </button>
+                    </Flex>
+                  </Cell>
+                </Row>
+              ))}
             </TableBody>
           </TableView>
         </Flex>

@@ -1,12 +1,16 @@
 import { HomeIcon } from "@heroicons/react/24/outline";
-import Navbar from "../header/Navbar";
+import { useContext } from "react";
+import TerminalContext from "../../context/TerminalContext";
 
 import { LuLayoutDashboard } from "react-icons/lu";
+
+import AirportList from "../airportList/AirportList";
 
 const navigation = [
   { name: "Home", icon: HomeIcon, current: true },
   { name: "Dashboard", icon: LuLayoutDashboard, current: false },
 ];
+
 const service = [
   { name: "Airport", current: true },
   { name: "Videos", current: false },
@@ -22,10 +26,12 @@ function classNames(...classes) {
 }
 
 export default function DetailedView() {
+  const { terminalList } = useContext(TerminalContext);
+
   return (
     <>
-      <div className="flex h-screen">
-        <nav className="flex-shrink-0 w-72 border-r border-gray-200 bg-white px-6 overflow-y-auto">
+      <div className="flex h-screen ">
+        <nav className="flex-shrink-0 w-60 border-r border-gray-200 bg-white px-6 overflow-y-auto">
           <ul role="list" className="flex flex-col gap-y-7">
             <li>
               <ul role="list" className="-mx-2 space-y-1">
@@ -89,6 +95,11 @@ export default function DetailedView() {
             </li>
           </ul>
         </nav>
+        <main className="flex-grow overflow-y-auto bg-white-100">
+          <div className="mx-auto p-5">
+            <AirportList terminalList={terminalList} />
+          </div>
+        </main>
       </div>
     </>
   );
